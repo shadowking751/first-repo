@@ -19,7 +19,7 @@ import com.yourname.gunmod.GunMod;
 public class BulletEntity extends AbstractArrow {
     
     private int ticksInAir = 0;
-    private static final float EXPLOSION_POWER = 2.5f;
+    private static final float EXPLOSION_POWER = 5f;
     private static final int MAX_TICKS = 400;
     
     // Effect durations (in ticks)
