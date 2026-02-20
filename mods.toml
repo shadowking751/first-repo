@@ -4,7 +4,11 @@ license="MIT"
 
 [[mods]]
 modId="gunmod"
-version="1.0"
+version="1.0.0"
 displayName="Gun Mod"
-description="A mod that adds a gun that shoots exploding bullets"
-authors=["YourName"]
+description="A mod that adds a gun that shoots exploding bullets with burning and slowing effects"
+logoFile="assets/gunmod/logo.png"
+authors=["jude roberts"]
+credits="Created with Minecraft Forge"
+displayURL="https://www.curseforge.com"
+updateJSONURL=""
