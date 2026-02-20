@@ -10,13 +10,14 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.level.Level;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.core.particles.ParticleTypes;
 
 public class GunItem extends Item {
     
     public GunItem(Item.Properties properties) {
         super(properties
-            .durability(500)  // Gun breaks after 500 shots
-            .fireResistant()  // Gun is fireproof
+            .durability(500)
+            .fireResistant()
         );
     }
     
@@ -25,44 +26,60 @@ public class GunItem extends Item {
         ItemStack itemStack = player.getItemInHand(hand);
         
         if (!level.isClientSide) {
-            // Check if player is on cooldown
             if (player.getCooldowns().isOnCooldown(this)) {
                 return InteractionResultHolder.fail(itemStack);
             }
             
-            // Create and spawn bullet entity
+            // Create bullet with velocity
             BulletEntity bullet = new BulletEntity(level, player);
-            bullet.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0f, 1.5f, 1.0f);
+            bullet.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0f, 2.0f, 1.0f);
             level.addFreshEntity(bullet);
             
-            // Damage the gun (durability)
             itemStack.hurt(1, player.getRandom(), player);
             
-            // Play gun sound
+            // Smooth firing sound
             level.playSound(
                 null,
                 player.getX(),
-                player.getY(),
+                player.getY() + player.getEyeHeight(),
                 player.getZ(),
-                SoundEvents.DISPENSER_FAIL,  // You can change this to any sound
+                SoundEvents.DISPENSER_FAIL,
                 SoundSource.PLAYERS,
-                1.0f,
-                1.2f  // Slightly higher pitch
+                0.8f,
+                1.3f
             );
             
-            // Add knockback effect to player
-            player.push(-Math.cos(Math.toRadians(player.getYRot())) * 0.1, 0, -Math.sin(Math.toRadians(player.getYRot())) * 0.1);
+            // Recoil with smooth animation
+            float recoilForce = 0.15f;
+            player.push(
+                -Math.cos(Math.toRadians(player.getYRot())) * recoilForce,
+                0.05f,
+                -Math.sin(Math.toRadians(player.getYRot())) * recoilForce
+            );
             
-            // Add cooldown (10 ticks = 0.5 seconds for rapid fire)
+            // Muzzle flash effect
+            for (int i = 0; i < 8; i++) {
+                double offsetX = (player.getRandom().nextDouble() - 0.5) * 0.8;
+                double offsetY = (player.getRandom().nextDouble() - 0.5) * 0.8;
+                double offsetZ = (player.getRandom().nextDouble() - 0.5) * 0.8;
+                level.addParticle(
+                    ParticleTypes.FLAME,
+                    player.getX() + offsetX,
+                    player.getY() + 1.5 + offsetY,
+                    player.getZ() + offsetZ,
+                    offsetX * 0.15, offsetY * 0.15, offsetZ * 0.15
+                );
+            }
+            
             player.getCooldowns().addCooldown(this, 10);
         } else {
-            // Client-side particle effects
-            for (int i = 0; i < 3; i++) {
-                double offsetX = (player.getRandom().nextDouble() - 0.5) * 0.5;
-                double offsetY = (player.getRandom().nextDouble() - 0.5) * 0.5;
-                double offsetZ = (player.getRandom().nextDouble() - 0.5) * 0.5;
+            // Client-side muzzle smoke
+            for (int i = 0; i < 5; i++) {
+                double offsetX = (player.getRandom().nextDouble() - 0.5) * 0.6;
+                double offsetY = (player.getRandom().nextDouble() - 0.5) * 0.6;
+                double offsetZ = (player.getRandom().nextDouble() - 0.5) * 0.6;
                 level.addParticle(
-                    net.minecraft.core.particles.ParticleTypes.SMOKE,
+                    ParticleTypes.SMOKE,
                     player.getX() + offsetX,
                     player.getY() + 1.5 + offsetY,
                     player.getZ() + offsetZ,
@@ -76,11 +93,11 @@ public class GunItem extends Item {
     
     @Override
     public boolean isEnchantable(ItemStack stack) {
-        return true;  // Allows enchanting the gun
+        return true;
     }
     
     @Override
     public int getEnchantmentValue() {
-        return 15;  // Makes it enchantable with most enchantments
+        return 15;
     }
 }
