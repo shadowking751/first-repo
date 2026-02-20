@@ -5,7 +5,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.javafxmod.FXModLanguageProvider;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -32,9 +32,9 @@ public class GunMod {
             .build("gunmod:bullet"));
     
     public GunMod() {
-        IEventBus modEventBus = FXModLanguageProvider.get().getModEventBus();
-        
-        ITEMS.register(modEventBus);
-        ENTITIES.register(modEventBus);
+    IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+    ITEMS.register(modEventBus);
+    ENTITIES.register(modEventBus);
     }
 }
