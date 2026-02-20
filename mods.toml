@@ -1,0 +1,10 @@
+modLoader="javafxmod"
+loaderVersion="[43,)"
+license="MIT"
+
+[[mods]]
+modId="gunmod"
+version="1.0"
+displayName="Gun Mod"
+description="A mod that adds a gun that shoots exploding bullets"
+authors=["YourName"]
