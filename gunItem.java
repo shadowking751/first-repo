@@ -28,6 +28,7 @@ public class GunItem extends Item {
         if (!level.isClientSide) {
             if (player.getCooldowns().isOnCooldown(this)) {
                 return InteractionResultHolder.fail(itemStack);
+                player.startUsingItem(hand);
             }
             
             // Create bullet with velocity
