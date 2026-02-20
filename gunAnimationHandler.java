@@ -33,8 +33,8 @@ public class GunAnimationHandler {
                 
                 if (!isUsing && player.getCooldowns().isOnCooldown(GunMod.GUN.get())) {
                     // Recoil animation during cooldown
-                    int cooldown = player.getCooldowns().getCooldownPercent(GunMod.GUN.get(), 0);
-                    return 1.0f - (cooldown / 10.0f);  // Smoothly transitions back
+                    float cooldown = player.getCooldowns().getCooldownPercent(GunMod.GUN.get(), 0);
+                    return 1.0f - cooldown; // or just cooldown, depending on how you want the curve
                 }
                 
                 return 0.0f;
