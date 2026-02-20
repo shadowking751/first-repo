@@ -11,7 +11,7 @@
     "S": { "item": "minecraft:stick" }
   },
   "result": {
-    "item": "mods.toml:laser_gun",
-    "count": 1
+  "item": "gunmod:gun",
+  "count": 1
   }
 }
