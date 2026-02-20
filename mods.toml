@@ -1,5 +1,5 @@
-modLoader="javafxmod"
-loaderVersion="[43,)"
+modLoader="javafml"
+loaderVersion="[52,)"
 license="MIT"
 
 [[mods]]
@@ -12,3 +12,10 @@ authors=["jude roberts"]
 credits="Created with Minecraft Forge"
 displayURL="https://www.curseforge.com"
 updateJSONURL=""
+
+[[dependencies.gunmod]]
+    modId="forge"
+    mandatory=true
+    versionRange="[52,)"
+    ordering="NONE"
+    side="BOTH"
