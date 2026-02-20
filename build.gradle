@@ -10,7 +10,7 @@ buildscript {
 
 apply plugin: 'net.minecraftforge.gradle'
 
-group = 'com.yourname'
+group = 'com.juder'
 archivesBaseName = 'gunmod'
 version = '1.0'
 
