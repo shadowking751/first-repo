@@ -3,6 +3,8 @@ package com.yourname.gunmod.entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.phys.EntityHitResult;
@@ -11,6 +13,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.Entity;
 import com.yourname.gunmod.GunMod;
 
 public class BulletEntity extends AbstractArrow {
@@ -18,6 +21,11 @@ public class BulletEntity extends AbstractArrow {
     private int ticksInAir = 0;
     private static final float EXPLOSION_POWER = 2.5f;
     private static final int MAX_TICKS = 400;
+    
+    // Effect durations (in ticks)
+    private static final int SLOWNESS_DURATION = 100;  // 5 seconds
+    private static final int SLOWNESS_LEVEL = 1;       // Slowness II
+    private static final int BURNING_DURATION = 120;   // 6 seconds
     
     public BulletEntity(EntityType<? extends AbstractArrow> entityType, Level level) {
         super(entityType, level);
@@ -34,7 +42,26 @@ public class BulletEntity extends AbstractArrow {
     protected void onHit(HitResult hitResult) {
         if (hitResult.getType() == HitResult.Type.ENTITY) {
             EntityHitResult entityHitResult = (EntityHitResult) hitResult;
-            if (entityHitResult.getEntity() != this.getOwner()) {
+            Entity entity = entityHitResult.getEntity();
+            
+            if (entity != this.getOwner()) {
+                // Apply effects to living entities
+                if (entity instanceof LivingEntity) {
+                    LivingEntity living = (LivingEntity) entity;
+                    
+                    // Apply slowness effect
+                    living.addEffect(new MobEffectInstance(
+                        MobEffects.MOVEMENT_SLOWDOWN,
+                        SLOWNESS_DURATION,
+                        SLOWNESS_LEVEL,
+                        false,  // ambient
+                        true    // show particles
+                    ));
+                    
+                    // Apply burning effect
+                    living.setSecondsOnFire(BURNING_DURATION / 20);  // Convert ticks to seconds
+                }
+                
                 this.explode();
             }
         } else if (hitResult.getType() == HitResult.Type.BLOCK) {
