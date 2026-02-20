@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "R  ",
+    "NNN",
+    "S  "
+  ],
+  "key": {
+    "R": { "item": "minecraft:redstone" },
+    "N": { "item": "minecraft:netherite_ingot" },
+    "S": { "item": "minecraft:stick" }
+  },
+  "result": {
+    "item": "mods.toml:laser_gun",
+    "count": 1
+  }
+}
