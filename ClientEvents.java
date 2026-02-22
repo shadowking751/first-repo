@@ -35,3 +35,4 @@ public class ClientEvents {
         }
     }
 }
+MinecraftForge.EVENT_BUS.register(AmmoHudOverlay.class);
