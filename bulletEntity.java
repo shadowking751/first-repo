@@ -41,33 +41,27 @@ public class BulletEntity extends AbstractArrow {
     @Override
     protected void onHit(HitResult hitResult) {
         if (hitResult.getType() == HitResult.Type.ENTITY) {
-            EntityHitResult entityHitResult = (EntityHitResult) hitResult;
-            Entity entity = entityHitResult.getEntity();
-            
+            EntityHitResult entityHit = (EntityHitResult) hitResult;
+            Entity entity = entityHit.getEntity();
+
             if (entity != this.getOwner()) {
-                // Apply effects to living entities
-                if (entity instanceof LivingEntity) {
-                    LivingEntity living = (LivingEntity) entity;
-                    
-                    // Apply slowness effect
+                if (entity instanceof LivingEntity living) {
                     living.addEffect(new MobEffectInstance(
                         MobEffects.MOVEMENT_SLOWDOWN,
                         SLOWNESS_DURATION,
                         SLOWNESS_LEVEL,
-                        false,  // ambient
-                        true    // show particles
+                        false,
+                        true
                     ));
-                    
-                    // Apply burning effect
-                    living.setSecondsOnFire(BURNING_DURATION / 20);  // Convert ticks to seconds
+
+                    living.setSecondsOnFire(BURNING_DURATION / 20);
                 }
-                
+
                 this.explode();
             }
         } else if (hitResult.getType() == HitResult.Type.BLOCK) {
             this.explode();
         }
-        super.onHit(hitResult);
     }
     
     private void explode() {
