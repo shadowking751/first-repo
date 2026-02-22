@@ -1,0 +1,21 @@
+{
+  "gun_fire": {
+    "sounds": [
+      {
+        "name": "gunmod:gun_fire",
+        "volume": 1.0,
+        "pitch": 1.0
+      }
+    ]
+  },
+
+  "gun_reload": {
+    "sounds": [
+      {
+        "name": "gunmod:gun_reload",
+        "volume": 1.0,
+        "pitch": 1.0
+      }
+    ]
+  }
+}
