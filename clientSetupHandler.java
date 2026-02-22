@@ -16,6 +16,12 @@ public class ClientSetupHandler {
     public static void onClientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(GunAnimationHandler::registerItemProperties);
     }
+
+    @SubscribeEvent
+    public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(GunModModelLayers.BULLET, BulletModel::createBodyLayer);
+    }
+
     
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
