@@ -20,6 +20,6 @@ public class ClientSetupHandler {
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         // Use default item renderer for bullets
-        event.registerEntityRenderer(GunMod.BULLET.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(GunMod.BULLET.get(), BulletRenderer::new);
     }
 }
