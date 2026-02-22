@@ -125,5 +125,12 @@
   {
     "predicate": { "gunmod:shooting": 1 },
     "model": "gunmod:item/gun_recoil"
+    "overrides": [
+  {
+    "predicate": { "gunmod:shooting": 1 },
+    "model": "gunmod:item/gun_recoil"
+  }
+]
+
   }
 ]
