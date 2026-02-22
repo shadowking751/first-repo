@@ -1,4 +1,7 @@
 {
   "item.gunmod.gun": "Plasma Rifle",
   "item.gunmod.ammo": "Energy Cell"
+  "key.gunmod.reload": "Reload Gun",
+  "sound.gunmod.gun_fire": "Gun Fire",
+  "sound.gunmod.gun_reload": "Gun Reload"
 }
