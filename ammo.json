@@ -15,3 +15,10 @@
     "count": 8
   }
 }
+
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "gunmod:item/ammo"
+  }
+}
